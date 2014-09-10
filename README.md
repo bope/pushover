@@ -43,7 +43,7 @@ file (`~/.pushover.conf`).
 
     apps:
       <application name1>: <application token1>
-      <application name1>: <application token2>
+      <application name2>: <application token2>
 
 
 pushover module
