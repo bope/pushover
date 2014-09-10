@@ -82,7 +82,9 @@ def setup_logger(verbosity):
     Create logger for CLI command.
 
     :param verbosity: Log level index for `LOG_LEVELS`
-    :returns: :py:class:`logging.Logger`
+    :type verbosity: int
+    :returns: logger
+    :rtype: :py:class:`logging.Logger`
     """
     try:
         log_level = LOG_LEVELS[verbosity]
@@ -108,7 +110,9 @@ def setup_argparser(prog):
     Create CLI argument parser.
 
     :param prog: Program name
-    :returns: :py:class:`argparse.ArgumentParser`
+    :type prog: str
+    :returns: ArgumentParser instance
+    :rtype: :py:class:`argparse.ArgumentParser`
     """
     parser = argparse.ArgumentParser(prog)
     parser.add_argument('-c', '--config', dest='config_file', default=None)
@@ -134,7 +138,9 @@ def parse_config(filepath):
     Parse config file.
 
     :param filepath: Path to configuration file
-    :returns: Dict
+    :type filepath: str
+    :returns: config
+    :rtype: dict
     """
     with open(filepath, 'r') as fh:
         return yaml.safe_load(fh.read())

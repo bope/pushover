@@ -37,8 +37,11 @@ class Message(dict):
     def __init__(self, token, user, message, **kwargs):
         """
         :param token: Application token
+        :type token: str
         :param user: User token
+        :type user: str
         :param message: Message text
+        :type message: str
         :param **kwargs: Additional message fields
         """
         kwargs.update(
@@ -97,7 +100,8 @@ class Message(dict):
         """
         Send message.
 
-        :returns: (Success bool, Response dict)
+        :returns: (Success, Response):
+        :rtype: (bool, dict)
         """
         log.info(u'sending message: %s', self)
         return message(**translate_params(self))
@@ -110,8 +114,9 @@ class User(NamedToken):
     def message(self, **kwargs):
         """
         Create message for user.
-        :param **kwargs: Message fields
-        :returns: :py:class:`Message`
+        :param **kwargs: Message fields, see :py:class:`Message`
+        :returns: Message instance
+        :rtype: :py:class:`Message`
         """
         return Message(user=self, **kwargs)
 
@@ -142,7 +147,9 @@ class Pushover(object):
         Add a user by name and token.
 
         :param username: Username used to refer to user
+        :type username: str
         :param token: User token
+        :type token: str
         """
         self.users[username] = User(username, token)
 
@@ -151,7 +158,9 @@ class Pushover(object):
         Add application by name and token.
 
         :param appname: Application name
+        :type appname: str
         :param token: Application token
+        :type token: str
         """
         self.apps[appname] = App(appname, token)
 
@@ -159,10 +168,14 @@ class Pushover(object):
         """
         Verify user.
 
-        :param token: Application token or name
+        :param token: Application token or names
+        :type token: str
         :param user: User token or name
+        :type user: str
         :param device: User device
-        :returns: (Success bool, Validation status bool)
+        :type device: str
+        :returns: Success, validation status
+        :rtype: bool, bool
         """
         token = self.apps.get(token, token)
         user = self.users.get(user, user)
@@ -181,10 +194,14 @@ class Pushover(object):
         Create message from application for user
 
         :param user: User token or name
+        :type user: str
         :param token: Application token or name
+        :type token: str
         :param message: Message text
+        :type message: str
         :param **kwargs: Additional message fields
-        :returns: :py:class:`Message`
+        :returns: Message instance
+        :rtype: :py:class:`Message`
         """
         app_obj = self.apps.get(token, None)
         user_obj = self.users.get(user, None)
@@ -202,6 +219,7 @@ class Pushover(object):
         Shortcut for sending message. Arguments are the same as for
         :py:meth:`Pushover.message`.
 
-        :returns: (Success bool, Response dict)
+        :returns: Success, response
+        :rtype: (bool, dict)
         """
         return self.message(*args, **kwargs).send()
