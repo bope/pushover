@@ -49,7 +49,6 @@ class Message(dict):
             user=user,
             message=message,
         )
-        kwargs = {k: v for k, v in kwargs.items()}
         super(Message, self).__init__(**kwargs)
 
     def __getattr__(self, item):
@@ -71,7 +70,7 @@ class Message(dict):
 
         for key in self:
             if key not in AVAILABLE_PARAMS:
-                raise UnknownParam(u'Param %s not available')
+                raise UnknownParam(u'Param %s not available' % key)
 
         message = self.get('message', '')
         title = self.get('title', '')
